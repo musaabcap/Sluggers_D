@@ -7,5 +7,8 @@ public class Main {
 
         customerController.run();
 
+        String namn = "Max";
+        System.out.println(namn);
+
     }
 }
