@@ -1,9 +1,11 @@
+package Customer;
+
 import java.sql.*;
 import java.util.ArrayList;
 
 /**
  * Repository-klass för kundhantering
- * Hanterar alla databasoperationer för Customer-entiteten
+ * Hanterar alla databasoperationer för Customer.Customer-entiteten
  * Innehåller även databasanslutning för att göra koden tydligare
  */
 public class CustomerRepository {
@@ -31,7 +33,7 @@ public class CustomerRepository {
 
             // Loopa igenom alla rader från databasen
             while (rs.next()) {
-                // Skapa ett nytt Customer-objekt från varje databasrad
+                // Skapa ett nytt Customer.Customer-objekt från varje databasrad
                 Customer customer = new Customer(
                         rs.getInt("customer_id"),     // Hämta ID från customer_id kolumnen
                         rs.getString("first_name"),   // Hämta förnamn

@@ -1,3 +1,5 @@
+package Customer;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -11,7 +13,7 @@ public class CustomerService {
     CustomerRepository customerRepository;
 
     /**
-     * Konstruktor för CustomerService
+     * Konstruktor för Customer.CustomerService
      * Initierar repository-lagret
      */
     public CustomerService() {

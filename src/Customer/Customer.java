@@ -1,3 +1,5 @@
+package Customer;
+
 /**
  * Klass som representerar en kund i webbshopen
  * Används för att hantera kunddata mellan databasen och applikationen
@@ -11,7 +13,7 @@ public class Customer {
     private String email;
 
     /**
-     * Konstruktor för att skapa en ny Customer
+     * Konstruktor för att skapa en ny Customer.Customer
      * Tar emot all nödvändig information för en kund
      *
      */
@@ -57,7 +59,7 @@ public class Customer {
      */
     @Override
     public String toString() {
-        return "Customer{" +
+        return "Customer.Customer{" +
                 "id=" + customerId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
