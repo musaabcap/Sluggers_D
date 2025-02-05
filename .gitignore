@@ -3,7 +3,7 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 sqlite-jdbc-3.48.0.0.jar/
-webshop.db/
+*.db
 ### Eclipse ###
 .apt_generated
 .classpath
