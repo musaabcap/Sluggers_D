@@ -1,4 +1,6 @@
 import Customer.CustomerController;
+import Product.ProductController;
+import Product.ProductRepository;
 
 import java.sql.*;
 
@@ -7,7 +9,9 @@ public class Main {
 
         CustomerController customerController = new CustomerController();
 
-        customerController.run();
+
+        ProductController productController = new ProductController();
+
 
     }
 }
