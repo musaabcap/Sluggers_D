@@ -1,5 +1,4 @@
 package Product;
-
 import Customer.Customer;
 
 import java.sql.*;
