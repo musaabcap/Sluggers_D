@@ -17,7 +17,7 @@ public class ProductController {
     Scanner scanner;
 
     /**
-     * Konstruktor för Customer.CustomerController
+     * Konstruktor för Produkt.ProduktController
      * Initierar service och scanner
      */
     public ProductController() {
@@ -27,7 +27,7 @@ public class ProductController {
     }
 
     /**
-     * Huvudloop för kundhantering
+     * Huvudloop för produkthantering
      * Visar meny och hanterar användarval
      */
     public void run() {

@@ -12,6 +12,7 @@ public class Main {
 
         ProductController productController = new ProductController();
 
+        productController.run();
 
     }
 }

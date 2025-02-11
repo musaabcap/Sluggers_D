@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * Service-klass för kundhantering
+ * Service-klass för produkthantering
  * Innehåller affärslogik mellan controller och repository
  */
 public class ProductService {
@@ -15,7 +15,7 @@ public class ProductService {
     ProductRepository productRepository;
 
     /**
-     * Konstruktor för Customer.CustomerService
+     * Konstruktor för Produkt.Produktervice
      * Initierar repository-lagret
      */
     public ProductService() {
@@ -23,10 +23,10 @@ public class ProductService {
     }
 
     /**
-     * Hämtar och visar alla kunder från databasen
+     * Hämtar och visar alla Produkt från databasen
      * Service-lagret kan här:
      * - Formatera utskriften
-     * - Lägga till affärslogik (t.ex. filtrera bort inaktiva kunder)
+     * - Lägga till affärslogik (t.ex. filtrera produkter)
      * - Hantera specialfall (t.ex. om listan är tom)
      *
      * @throws SQLException vid problem med databasanrop
@@ -55,10 +55,10 @@ public class ProductService {
 
     /**
      * Här kan man lägga till fler metoder som t.ex:
-     * - getCustomerById
-     * - addNewCustomer
-     * - updateCustomer
-     * - deleteCustomer
-     * - findCustomerByEmail
+     * - getProduktById
+     * - addNewProdukt
+     * - updateprodukt
+     * - deleteProdukt
+     * - findProduktByEmail
      */
 }
