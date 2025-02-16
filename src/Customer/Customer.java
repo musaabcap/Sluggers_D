@@ -8,41 +8,43 @@ public class Customer {
 
     // Privata fält för att uppnå inkapsling
     private int customerId;
-    private String firstName;
-    private String lastName;
+    private String name;
     private String email;
+    private String phone;
+    private String address;
+    private String password;
+
 
     /**
      * Konstruktor för att skapa en ny Customer.Customer
      * Tar emot all nödvändig information för en kund
      *
      */
-    public Customer(int customerId, String firstName, String lastName, String email) {
+    public Customer(int customerId, String name, String email, String phone, String address, String password) {
         this.customerId = customerId;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
         this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.password = password;
     }
 
     // Getters och setters för alla fält
+
     public int getCustomerId() {
         return customerId;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public String getName() {
+        return name;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -53,17 +55,45 @@ public class Customer {
         this.email = email;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
     /**
      * toString-metod för att få en läsbar representation av kunden
      * Användbar vid utskrift eller debugging
      */
+
     @Override
     public String toString() {
-        return "Customer.Customer{" +
-                "id=" + customerId +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+        return "Customer{" +
+                "customerId=" + customerId +
+                ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
 }
