@@ -43,10 +43,57 @@ public class CustomerService {
         System.out.println("\n=== Kundlista ===");
         for (Customer customer : customers) {
             System.out.println("ID: " + customer.getCustomerId());
-            System.out.println("Namn: " + customer.getFirstName() + " " + customer.getLastName());
+            System.out.println("Namn: " + customer.getName());
             System.out.println("Email: " + customer.getEmail());
+            System.out.println("Telefon: " + customer.getPhone());
+            System.out.println("Adress: " + customer.getAddress());
+            System.out.println("Lösenord: " + customer.getPassword());
             System.out.println("-----------------");
         }
+    }
+
+    public Customer getCustomerById(int customerId) throws SQLException {
+
+        Customer customer = customerRepository.getCustomerById(customerId);
+        if(customer == null){
+            System.out.println("Ingen kund hittades med ID: " + customerId);
+            return null;
+        }
+        return customer;
+    }
+    public void addCustomer(String namn, String email, String telefon, String adress, String losenord) throws SQLException {
+
+        if (namn == null || namn.trim().isEmpty()) {
+            throw new IllegalArgumentException("Namn får inte vara tomt");
+        }
+        if (email == null || !email.contains("@")) {
+            throw new IllegalArgumentException("Ogiltig emailadress");
+        }
+
+        try {
+            customerRepository.addCustomer(namn, email, telefon, adress, losenord);
+        } catch (SQLException e) {
+            throw new RuntimeException("Kunde inte skapa kund", e);
+        }
+    }
+
+    public void updateCustomerName(int customerId, String newName) throws SQLException {
+        if (customerId <= 0) {
+            throw new IllegalArgumentException("Kunde ID inte vara tomt");
+        }
+        if (newName == null || newName.trim().isEmpty()) {
+            throw new IllegalArgumentException("namn kan inte vara tomt");
+        }
+
+        try {
+            customerRepository.updateCustomerName(customerId, newName);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+    public void updateCustomerEmail(int customerId, String newEmail) throws SQLException {
+
     }
 
     /**

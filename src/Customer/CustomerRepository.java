@@ -14,7 +14,7 @@ public class CustomerRepository {
      * URL till SQLite-databasen
      * Denna används i varje metod för att ansluta till databasen
      */
-    private static final String URL = "jdbc:sqlite:webshop.db";
+    private static final String URL = "jdbc:sqlite:webbutiken.db";
 
     /**
      * Hämtar alla kunder från databasen
@@ -36,9 +36,11 @@ public class CustomerRepository {
                 // Skapa ett nytt Customer.Customer-objekt från varje databasrad
                 Customer customer = new Customer(
                         rs.getInt("customer_id"),     // Hämta ID från customer_id kolumnen
-                        rs.getString("first_name"),   // Hämta förnamn
-                        rs.getString("last_name"),    // Hämta efternamn
-                        rs.getString("email")         // Hämta email
+                        rs.getString("name"),   // Hämta förnamn
+                        rs.getString("email"),    // Hämta email
+                        rs.getString("phone"),         // Hämta email
+                        rs.getString("address"),
+                        rs.getString("password")
                 );
                 customers.add(customer);
             }
@@ -46,6 +48,61 @@ public class CustomerRepository {
         return customers;
     }
 
+    public Customer getCustomerById(int id) throws SQLException {
+        try (Connection conn = DriverManager.getConnection(URL);
+             PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM customers WHERE customer_id = ?")) {
+
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return new Customer(
+                        rs.getInt("customer_id"),
+                        rs.getString("name"),
+                        rs.getString("email"),
+                        rs.getString("phone"),
+                        rs.getString("address"),
+                        rs.getString("password")
+                );
+            }
+            throw new SQLException("Customer not found");
+        }
+    }
+
+    public void addCustomer(String name, String email, String phone, String adress, String password) throws SQLException {
+
+        String sql = "INSERT INTO customers (name, email, phone, address, password) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection conn = DriverManager.getConnection(URL);
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+
+            pstmt.setString(1, name);
+            pstmt.setString(2, email);
+            pstmt.setString(3, phone);
+            pstmt.setString(4, adress);
+            pstmt.setString(5, password);
+            int affected = pstmt.executeUpdate();  // Sparar antalet påverkade rader
+            if (affected != 1) {  // Om antalet INTE är 1
+                throw new SQLException("Kunde inte lägga till kund i databasen");
+            }
+        }
+
+    }
+
+    public void updateCustomerName(int customerId, String name) throws SQLException {
+        String sql = "UPDATE customers SET name = ? WHERE customer_id = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setString(1, name);
+            pstmt.setInt(2, customerId);
+            int affected = pstmt.executeUpdate();
+            if (affected != 1) {
+                throw new SQLException("Lyckades inte uppdatera kunden");
+            }
+            System.out.println("Konto med id: " + customerId + " har uppdaterats");
+        }
+    }
 
     /**
      * Här kan fler metoder läggas till som t.ex:
@@ -62,4 +119,5 @@ public class CustomerRepository {
      * 4. Hantera resultatet
      * 5. Låt try-with-resources stänga alla resurser
      */
+
 }
