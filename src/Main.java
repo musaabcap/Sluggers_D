@@ -1,4 +1,5 @@
 import Customer.CustomerController;
+import Order.OrderController;
 import Product.ProductController;
 import Product.ProductRepository;
 
@@ -9,10 +10,15 @@ public class Main {
 
         CustomerController customerController = new CustomerController();
 
+        OrderController orderController = new OrderController();
 
         ProductController productController = new ProductController();
 
-        customerController.run();
+        //customerController.run();
+
+        orderController.run();
+
+
 
     }
 }
