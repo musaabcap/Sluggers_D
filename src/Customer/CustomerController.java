@@ -1,6 +1,5 @@
 package Customer;
 import org.w3c.dom.ls.LSOutput;
-
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -98,8 +97,8 @@ public class CustomerController {
         scanner.nextLine();
 
         System.out.println("\nVad vill du uppdatera?");
-        System.out.println("1. Namn");
-        System.out.println("2. Email");
+        System.out.println("1. Namn"); // Metoden finns för att ändra namn
+        System.out.println("2. Email"); // Metoden finns för att ändra email
         System.out.println("3. Telefon");
         System.out.println("4. Adress");
         System.out.println("5. Lösenord");

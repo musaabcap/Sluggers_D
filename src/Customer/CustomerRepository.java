@@ -104,6 +104,20 @@ public class CustomerRepository {
         }
     }
 
+    public void updateCustomerEmail(int customerId, String email) throws SQLException {
+        String sql = "UPDATE customers SET email = ? WHERE customer_id = ?";
+        try (Connection conn = DriverManager.getConnection(URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)){
+                 pstmt.setString(1, email);
+                 pstmt.setInt(2, customerId);
+                 int affected = pstmt.executeUpdate();
+                 if (affected != 1) {
+                     throw new SQLException("Lyckades inte uppdatera kunden "+email);
+                 }
+                 System.out.println("Konto med id: " + customerId + " har uppdaterats");
+        }
+    }
+
     /**
      * Här kan fler metoder läggas till som t.ex:
      * - addCustomer
