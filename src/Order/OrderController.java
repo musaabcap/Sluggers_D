@@ -16,7 +16,7 @@ public class OrderController {
         while(true){
             try{
                 System.out.println("\n=== Orderhantering ===");
-                System.out.println("1. Create Order");
+                System.out.println("1. Get all orders");
                 System.out.println("0. Avsluta");
                 System.out.print("Välj ett alternativ: ");
 
@@ -24,7 +24,7 @@ public class OrderController {
 
                 switch(select){
                     case 1:
-                        System.out.println("1. Create Order");
+                        orderService.getAllOrders();
                         break;
                     case 0:
                         System.out.println("0. Avslutar orderhantering");
@@ -32,9 +32,9 @@ public class OrderController {
                     default:
                         System.out.println("Ogiltigt val, försök igen");
                 }
-            } /*catch(SQLException e){
+            } catch(SQLException e){
                 System.out.println("Ett fel uppstod vid databasanrop: "+e.getMessage());
-            }*/
+            }
             catch (Exception e) {
                 // Hantera övriga fel (t.ex. felaktig input)
                 System.out.println("Ett oväntat fel uppstod: " + e.getMessage());

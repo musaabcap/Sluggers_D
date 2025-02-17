@@ -2,10 +2,11 @@ package Order;
 import java.time.LocalDate;
 
 public class Order {
-    private Long orderId;
+    private int orderId;
     private LocalDate orderDate;
 
-    public Order(LocalDate orderDate) {
+    public Order(int orderId, LocalDate orderDate) {
+        this.orderId = orderId;
         this.orderDate = orderDate;
     }
 
@@ -15,5 +16,13 @@ public class Order {
 
     public void setOrderDate(LocalDate orderDate) {
         this.orderDate = orderDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId=" + orderId +
+                ", orderDate=" + orderDate +
+                '}';
     }
 }
