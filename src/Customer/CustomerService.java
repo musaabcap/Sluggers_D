@@ -93,6 +93,19 @@ public class CustomerService {
 
     }
     public void updateCustomerEmail(int customerId, String newEmail) throws SQLException {
+        if (newEmail == null || newEmail.trim().isEmpty()) {
+            throw new IllegalArgumentException("email kan inte vara tomt");
+        }
+        if (customerId <= 0) {
+            throw new IllegalArgumentException("ID kan inte vara mindre än 1");
+        }
+
+        try {
+            customerRepository.updateCustomerEmail(customerId, newEmail);
+        }
+        catch (Exception e) {
+            throw new RuntimeException("Kunde inte uppdatera kundens email",e);
+        }
 
     }
 
