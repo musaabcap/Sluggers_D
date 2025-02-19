@@ -118,6 +118,23 @@ public class CustomerRepository {
         }
     }
 
+    public void deleteCustomer(int customerId) throws SQLException {
+        String sql = "DELETE FROM customers WHERE customer_id = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, customerId);
+            int rowsAffected = pstmt.executeUpdate();
+
+            if (rowsAffected != 1) {
+                throw new SQLException("Lyckades inte radera kund med kund id: "+customerId);
+            }
+            System.out.println("Konto med id: " + customerId + " har raderats");
+        }
+    }
+
+
     /**
      * Här kan fler metoder läggas till som t.ex:
      * - addCustomer

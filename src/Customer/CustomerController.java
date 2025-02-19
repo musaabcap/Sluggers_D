@@ -38,6 +38,7 @@ public class CustomerController {
                 System.out.println("2. Visa en kund");
                 System.out.println("3. Registrera ny kund");
                 System.out.println("4. Uppdatera kund");
+                System.out.println("5. Radera kund");
                 System.out.println("0. Avsluta");
                 System.out.print("Välj ett alternativ: ");
 
@@ -73,6 +74,11 @@ public class CustomerController {
                         break;
                     case 4:
                         displayUpdateMenu();
+                        break;
+                    case 5:
+                        System.out.println("Ange kund id");
+                        int customerId = scanner.nextInt();
+                        customerService.deleteCustomerById(customerId);
                         break;
                     case 0:
                         System.out.println("Avslutar kundhantering...");
