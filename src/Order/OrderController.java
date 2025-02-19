@@ -7,7 +7,7 @@ public class OrderController {
     OrderService orderService;
     Scanner scanner;
 
-    public OrderController() {
+    public OrderController() throws SQLException {
         this.orderService = new OrderService();
         this.scanner = new Scanner(System.in);
     }
@@ -17,6 +17,8 @@ public class OrderController {
             try{
                 System.out.println("\n=== Orderhantering ===");
                 System.out.println("1. Get all orders");
+                System.out.println("2. Make a new order");
+                System.out.println("3. Show order with customer information");
                 System.out.println("0. Avsluta");
                 System.out.print("Välj ett alternativ: ");
 
@@ -25,6 +27,12 @@ public class OrderController {
                 switch(select){
                     case 1:
                         orderService.getAllOrders();
+                        break;
+                    case 2:
+                        displayOrderMenu();
+                        break;
+                    case 3:
+                        orderService.getOrderWithCustomerInfo();
                         break;
                     case 0:
                         System.out.println("0. Avslutar orderhantering");
@@ -42,6 +50,13 @@ public class OrderController {
             }
 
         }
+    }
+
+    public void displayOrderMenu() throws SQLException {
+        System.out.println("Ange dit ID: ");
+        int customerId = scanner.nextInt();
+
+        orderService.makeOrder(customerId);
     }
 
 
