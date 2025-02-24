@@ -1,11 +1,13 @@
 package Order;
+import Product.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.sql.SQLException;
-
 public class OrderController {
 
     OrderService orderService;
     Scanner scanner;
+    ProductController productController;
 
     public OrderController() throws SQLException {
         this.orderService = new OrderService();
@@ -26,10 +28,25 @@ public class OrderController {
 
                 switch(select){
                     case 1:
-                        orderService.getAllOrdersWithProducts();
+                        ArrayList<Order> orders = orderService.getAllOrdersWithProducts();
+                        for (Order order : orders) {
+                            System.out.println("\nOrder ID: " + order.getOrderId());
+                            System.out.println("Orderdatum: " + order.getOrderDate());
+                            System.out.println("Kund ID: " + order.getCustomerId());
+
+                            // Skriv ut alla produkter i ordern
+                            System.out.println("Produkter i ordern:");
+                            for (Product product : order.getProducts()) {
+                                System.out.println("- " + product.getName() +
+                                        ", Antal: " + product.getStockQuantity() +
+                                        ", Pris: " + product.getPrice() + " kr");
+                            }
+                            System.out.println("------------------------");
+
+                        }
                         break;
                     case 2:
-                        displayOrderMenu();
+                        productController.productMenu();
                         break;
                     case 3:
                         orderService.getOrderWithCustomerInfo();
@@ -52,13 +69,15 @@ public class OrderController {
         }
     }
 
-    public void displayOrderMenu() throws SQLException {
+    public void newOrderMenu() throws SQLException {
+
         System.out.println("Ange dit ID: ");
         int customerId = scanner.nextInt();
 
         orderService.makeOrder(customerId);
-    }
 
+
+    }
 
 
 }

@@ -33,11 +33,11 @@ public class OrderService {
     }*/
 
     public void makeOrder(int customerId) throws SQLException {
-        //Order order = new Order(LocalDate.now());
-        //orderRepository.addOrder(order, customerId);
+        LocalDateTime dateNow = LocalDateTime.now();
+        orderRepository.addOrder(dateNow, customerId);
     }
 
-    /*public ArrayList<Order> getAllOrdersWithProducts() throws SQLException {
+    public ArrayList<Order> getAllOrdersWithProducts() throws SQLException {
         // Först hämta alla ordrar
         ArrayList<Order> orders = orderRepository.getExistingOrders();
 
@@ -48,8 +48,6 @@ public class OrderService {
 
         return orders;
     }
-     */
-
 
     public void getOrderWithCustomerInfo() throws SQLException {
         ArrayList <OrderWithCustomer> orderCustomerList = orderRepository.getOrdersWithCustomerInfo();

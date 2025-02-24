@@ -16,6 +16,13 @@ public class Product {
         this.stockQuantity = stockQuantity;
     }
 
+    public Product(int productId, String name, double price, int stockQuantity) {
+        this.productId = productId;
+        this.name = name;
+        this.price = price;
+        this.stockQuantity = stockQuantity;
+    }
+
     public int getProductId() {
         return productId;
     }

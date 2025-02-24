@@ -2,6 +2,7 @@ package Order;
 import Product.Product;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -11,20 +12,29 @@ public class OrderRepository {
 
 
 
-    public void addOrder(Order order, int customerId) throws SQLException {
+    public int addOrder(LocalDateTime dateNow, int customerId) throws SQLException {
+        int generatedOrderId = -1; // Defaultvärde om något går fel
         try (Connection conn = DriverManager.getConnection(URL)) {
             // Använd PreparedStatement istället för Statement för säkerhet
             String query = "INSERT INTO orders (customer_id, order_date) VALUES (?, ?)";
-            PreparedStatement pstmt = conn.prepareStatement(query);
+            PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
             // Sätt parametrarna
             // Konvertera LocalDateTime till java.sql.Date
-            java.sql.Date sqlDate = java.sql.Date.valueOf(order.getOrderDate().toLocalDate());
+            Timestamp sqlTimestamp = Timestamp.valueOf(dateNow);
             pstmt.setInt(1, customerId);
-            pstmt.setDate(2, sqlDate);
+            pstmt.setTimestamp(2, sqlTimestamp);
 
             pstmt.executeUpdate();
+
+            try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    generatedOrderId = generatedKeys.getInt(1); // Första kolumnen innehåller order_id
+                }
+            }
+            return generatedOrderId; // Returnerar det nya order_id
         }
+
     }
 
     public ArrayList<OrderWithCustomer> getOrdersWithCustomerInfo() throws SQLException {
@@ -78,7 +88,7 @@ public class OrderRepository {
     }
 
     // Lägg till produkter för en specifik order
-    /*public void addProductsToOrder(Order order) throws SQLException {
+    public void addProductsToOrder(Order order) throws SQLException {
         try (Connection conn = DriverManager.getConnection(URL);
              PreparedStatement pstmt = conn.prepareStatement(
                      "SELECT products.product_id, products.name, products.price, orders_products.quantity " +
@@ -97,13 +107,12 @@ public class OrderRepository {
 
                     // Skapa Product-objekt och lägg till i ordern
 
-                    Product product = new Product(productId, name, price);
-
+                    Product product = new Product(productId, name, price, quantity);
 
                     order.addProduct(product);
                 }
             }
         }
-    }*/
+    }
 
 }

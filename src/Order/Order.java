@@ -1,4 +1,6 @@
 package Order;
+import Product.Product;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -8,15 +10,14 @@ public class Order {
     private int orderId;
     private int customerId;
     private LocalDateTime orderDate;
-    private List<String> products;
+    private List<Product> products;
     private double totalPrice;
 
 
     // Konstrukör - för ny order
     public Order(int customerId, List<String> products, double totalPrice) {
-        this.orderDate = orderDate;
         this.customerId = customerId;
-        this.products = new ArrayList<>(products);
+        this.products = new ArrayList<>();
         this.totalPrice = totalPrice;
         this.orderDate = LocalDateTime.now();
     }
@@ -24,15 +25,15 @@ public class Order {
     // För existerande
     public Order(int orderId, LocalDateTime orderDate, int customerId) {
         this.orderId = orderId;
-        this.orderDate = LocalDateTime.now();
+        this.orderDate = orderDate;
         this.customerId = customerId;
         this.products = new ArrayList<>();
     }
 
     // I Order-klassen
-    /*public void addProduct(Product product) {
+    public void addProduct(Product product) {
         this.products.add(product);
-    }*/
+    }
 
     public int getOrderId() {
         return orderId;
@@ -58,11 +59,11 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    public List<String> getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(List<String> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
 

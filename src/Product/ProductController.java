@@ -3,6 +3,7 @@ import Customer.CustomerService;
 
 import java.sql.SQLException;
 import java.util.Scanner;
+import Order.*;
 
 /**
  * Controller-klass för produkthantering
@@ -12,6 +13,7 @@ public class ProductController {
 
     // Service-lager för produkthantering, hanterar affärslogik
     ProductService productService;
+    OrderController orderController;
 
     // Scanner för användarinput
     Scanner scanner;
@@ -30,13 +32,14 @@ public class ProductController {
      * Huvudloop för produkthantering
      * Visar meny och hanterar användarval
      */
-    public void run() {
+    public void productMenu() {
         while (true) {
             try {
                 // Skriv ut menyalternativ direkt i run-metoden för tydlighet
-                System.out.println("\n=== Kundhantering ===");
+                System.out.println("\n=== Produkt hantering ===");
                 System.out.println("1. Visa alla produkter");
                 System.out.println("2. Sortera produkter");
+                System.out.println("3. Lägg till vara i varukorgen");
                 System.out.println("0. Avsluta");
                 System.out.print("Välj ett alternativ: ");
 
@@ -48,9 +51,13 @@ public class ProductController {
                     case 1:
                         // Anropa service-lagret för att visa alla produkter
                         productService.showAllProducts();
+                        System.out.println("Lägg till produkter i varukorgen");
                         break;
                     case 2:
                         sortProducts();
+                        break;
+                    case 3:
+                        orderController.newOrderMenu();
                         break;
                     case 0:
                         System.out.println("Avslutar produkthantering...");
