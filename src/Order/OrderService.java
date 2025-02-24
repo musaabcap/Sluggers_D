@@ -18,7 +18,7 @@ public class OrderService {
         this.customerService = new CustomerService();
     }
 
-    public void getAllOrders() throws SQLException {
+    /*public void getAllOrders() throws SQLException {
 
         ArrayList <Order> orders = orderRepository.getOrders();
 
@@ -30,12 +30,26 @@ public class OrderService {
         for (Order order : orders) {
             System.out.println(order.toString());
         }
-    }
+    }*/
 
     public void makeOrder(int customerId) throws SQLException {
-        Order order = new Order(LocalDate.now());
-        orderRepository.addOrder(order, customerId);
+        //Order order = new Order(LocalDate.now());
+        //orderRepository.addOrder(order, customerId);
     }
+
+    /*public ArrayList<Order> getAllOrdersWithProducts() throws SQLException {
+        // Först hämta alla ordrar
+        ArrayList<Order> orders = orderRepository.getExistingOrders();
+
+        // Sedan lägg till produkter för varje order
+        for (Order order : orders) {
+            orderRepository.addProductsToOrder(order);
+        }
+
+        return orders;
+    }
+     */
+
 
     public void getOrderWithCustomerInfo() throws SQLException {
         ArrayList <OrderWithCustomer> orderCustomerList = orderRepository.getOrdersWithCustomerInfo();

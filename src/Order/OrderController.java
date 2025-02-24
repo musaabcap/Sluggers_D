@@ -16,7 +16,7 @@ public class OrderController {
         while(true){
             try{
                 System.out.println("\n=== Orderhantering ===");
-                System.out.println("1. Get all orders");
+                System.out.println("1. Get all orders with product information");
                 System.out.println("2. Make a new order");
                 System.out.println("3. Show order with customer information");
                 System.out.println("0. Avsluta");
@@ -26,7 +26,7 @@ public class OrderController {
 
                 switch(select){
                     case 1:
-                        orderService.getAllOrders();
+                        orderService.getAllOrdersWithProducts();
                         break;
                     case 2:
                         displayOrderMenu();
