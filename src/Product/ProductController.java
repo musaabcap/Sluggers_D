@@ -36,6 +36,7 @@ public class ProductController {
                 // Skriv ut menyalternativ direkt i run-metoden för tydlighet
                 System.out.println("\n=== Kundhantering ===");
                 System.out.println("1. Visa alla produkter");
+                System.out.println("2. Sortera produkter");
                 System.out.println("0. Avsluta");
                 System.out.print("Välj ett alternativ: ");
 
@@ -45,8 +46,11 @@ public class ProductController {
                 // Hantera användarens val
                 switch (select) {
                     case 1:
-                        // Anropa service-lagret för att visa alla kunder
+                        // Anropa service-lagret för att visa alla produkter
                         productService.showAllProducts();
+                        break;
+                    case 2:
+                        sortProducts();
                         break;
                     case 0:
                         System.out.println("Avslutar produkthantering...");
@@ -62,6 +66,54 @@ public class ProductController {
                 System.out.println("Ett oväntat fel uppstod: " + e.getMessage());
                 scanner.nextLine(); // Rensa scanner-bufferten vid felinmatning
             }
+        }
+    }
+
+    public void sortProducts() {
+
+        while (true) {
+            try {
+                System.out.println("\n=== Sortera produkter ===");
+                System.out.println("1. Sortera efter namn");
+                System.out.println("2. Sortera efter kategori");
+                System.out.println("3. Sortera efter pris");
+                System.out.println("4. Sortera efter antal");
+                System.out.println("5. Avancerad sortering");
+                System.out.println("0. Gå tillbaka");
+
+                int select = scanner.nextInt();
+
+                switch (select) {
+                    case 1:
+                        productService.sortProductsByName();
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        productService.sortProductsByPrice();
+                        break;
+                    case 4:
+                        productService.sortProductsByStockQuantity();
+                        break;
+                    case 5:
+                        productService.sortProductsByCategory();
+                        break;
+                    case 0:
+                        System.out.println("Går tillbaka");
+                        return;
+                    default:
+                }
+
+
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public void advancedSortProductsMenu() {
+        while (true) {
+            System.out.println("\n=== Avancerad sortering ===");
         }
     }
 }
