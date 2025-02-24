@@ -3,6 +3,7 @@ import Customer.Customer;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProductRepository {
 
@@ -31,4 +32,28 @@ public class ProductRepository {
         }
         return products;
     }
+
+    public List<String> getProductsSortedByCategory() throws SQLException {
+        List<String> sortedProducts = new ArrayList<>();
+        String sql = "        SELECT c.name AS category_name, p.name AS product_name, p.price, p.stock_quantity" +
+                "        FROM products p" +
+                "        JOIN products_categories pc ON p.product_id = pc.product_id" +
+                "        JOIN categories c ON pc.category_id = c.category_id" +
+                "        ORDER BY c.name ASC, p.name ASC;";
+
+        try (Connection conn = DriverManager.getConnection(URL);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+                 while (rs.next()) {
+                     String categoryName = rs.getString("category_name");
+                     String productName = rs.getString("product_name");
+                     double price = rs.getDouble("price");
+                     int stockQuantity = rs.getInt("stock_quantity");
+
+                     sortedProducts.add(categoryName + " - " + productName + " - " + price + " - " + stockQuantity);
+                 }
+        }
+        return sortedProducts;
+    }
+
 }
