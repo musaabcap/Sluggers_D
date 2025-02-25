@@ -109,11 +109,26 @@ public class CustomerService {
 
     }
 
+    public void deleteCustomerById(int customerId) throws SQLException {
+        if (customerId <= 0) {
+            throw new IllegalArgumentException("ID kan inte vara mindre än 1");
+        }
+
+        try {
+            customerRepository.deleteCustomer(customerId);
+        }
+        catch (Exception e) {
+            throw new RuntimeException("Kunde inte radera kund",e);
+        }
+
+
+    }
+
     /**
      * Här kan man lägga till fler metoder som t.ex:
-     * - getCustomerById
-     * - addNewCustomer
-     * - updateCustomer
+     * - getCustomerById--
+     * - addNewCustomer--
+     * - updateCustomer--
      * - deleteCustomer
      * - findCustomerByEmail
      */

@@ -4,6 +4,8 @@ import Customer.CustomerRepository;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Service-klass för produkthantering
@@ -52,6 +54,40 @@ public class ProductService {
             System.out.println("-----------------");
         }
     }
+
+    public void sortProductsByName() throws SQLException {
+        List<String> sortedProducts = productRepository.getAllProducts()
+                .stream()
+                .sorted(Comparator.comparing(Product::getName))
+                .map(p -> p.getName() + " - " + p.getPrice() + " SEK")
+                .toList();
+        sortedProducts.forEach(System.out::println);
+    }
+
+    public void sortProductsByPrice() throws SQLException {
+        List<String> sortedProducts = productRepository.getAllProducts()
+                .stream()
+                .sorted(Comparator.comparing(Product::getPrice))
+                .map(p -> p.getName() + " - " + p.getPrice() + " SEK")
+                .toList();
+        sortedProducts.forEach(System.out::println);
+    }
+
+    public void sortProductsByStockQuantity() throws SQLException {
+        List<String> sortedProducts = productRepository.getAllProducts()
+                .stream()
+                .sorted(Comparator.comparing(Product::getStockQuantity))
+                .map(p -> p.getName() + " - " + p.getStockQuantity() + " Antal")
+                .toList();
+        sortedProducts.forEach(System.out::println);
+    }
+
+    public void sortProductsByCategory() throws SQLException {
+        List<String> sortedProducts = productRepository.getProductsSortedByCategory();
+        sortedProducts.forEach(System.out::println);
+    }
+
+
 
     /**
      * Här kan man lägga till fler metoder som t.ex:
