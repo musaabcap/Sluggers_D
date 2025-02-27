@@ -115,4 +115,19 @@ public class OrderRepository {
         }
     }
 
+
+    public void addOrderProduct(int orderId, int productId, int quantity, double price) throws SQLException {
+        try (Connection conn = DriverManager.getConnection(URL)) {
+            String query = "INSERT INTO orders_products (order_id, product_id, quantity, unit_price) VALUES (?, ?, ?, ?)";
+            PreparedStatement pstmt = conn.prepareStatement(query);
+
+            pstmt.setInt(1, orderId);
+            pstmt.setInt(2, productId);
+            pstmt.setInt(3, quantity);
+            pstmt.setDouble(4, price);
+
+            pstmt.executeUpdate();
+        }
+    }
+
 }
