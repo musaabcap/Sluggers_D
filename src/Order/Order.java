@@ -75,15 +75,6 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    public void displayOrderDetails() {
-        System.out.println("Order ID: " + orderId);
-        System.out.println("Customer ID: " + customerId);
-        System.out.println("Order Date: " + orderDate);
-        System.out.println("Products: " + products);
-        System.out.println("Total Price: " + totalPrice);
-    }
-
-
     @Override
     public String toString() {
         return "Order{" +
@@ -94,4 +85,25 @@ public class Order {
                 ", totalPrice=" + totalPrice +
                 '}';
     }
+
+    public String displayOrderWithProducts() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("\nOrder ID: ").append(orderId)
+                .append("\nOrderdatum: ").append(orderDate)
+                .append("\nKund ID: ").append(customerId)
+                .append("\nProdukter i ordern:");
+
+        for (Product product : products) {
+            sb.append("\n- ").append(product.getName())
+                    .append(", Antal: ").append(product.getStockQuantity())
+                    .append(", Pris: ").append(product.getPrice()).append(" kr");
+        }
+
+        sb.append("\n------------------------");
+
+        return sb.toString();
+    }
+
+
 }

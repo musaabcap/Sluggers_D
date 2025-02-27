@@ -51,7 +51,6 @@ public class ProductController {
                     case 1:
                         // Anropa service-lagret för att visa alla produkter
                         productService.showAllProducts();
-                        System.out.println("Lägg till produkter i varukorgen");
                         break;
                     case 2:
                         sortProducts();

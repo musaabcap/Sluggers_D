@@ -30,19 +30,7 @@ public class OrderController {
                     case 1:
                         ArrayList<Order> orders = orderService.getAllOrdersWithProducts();
                         for (Order order : orders) {
-                            System.out.println("\nOrder ID: " + order.getOrderId());
-                            System.out.println("Orderdatum: " + order.getOrderDate());
-                            System.out.println("Kund ID: " + order.getCustomerId());
-
-                            // Skriv ut alla produkter i ordern
-                            System.out.println("Produkter i ordern:");
-                            for (Product product : order.getProducts()) {
-                                System.out.println("- " + product.getName() +
-                                        ", Antal: " + product.getStockQuantity() +
-                                        ", Pris: " + product.getPrice() + " kr");
-                            }
-                            System.out.println("------------------------");
-
+                            System.out.println(order.displayOrderWithProducts());
                         }
                         break;
                     case 2:
