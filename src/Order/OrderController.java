@@ -1,11 +1,13 @@
 package Order;
+import Product.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.sql.SQLException;
-
 public class OrderController {
 
     OrderService orderService;
     Scanner scanner;
+    ProductController productController;
 
     public OrderController() throws SQLException {
         this.orderService = new OrderService();
@@ -16,7 +18,7 @@ public class OrderController {
         while(true){
             try{
                 System.out.println("\n=== Orderhantering ===");
-                System.out.println("1. Get all orders");
+                System.out.println("1. Get all orders with product information");
                 System.out.println("2. Make a new order");
                 System.out.println("3. Show order with customer information");
                 System.out.println("0. Avsluta");
@@ -26,10 +28,13 @@ public class OrderController {
 
                 switch(select){
                     case 1:
-                        orderService.getAllOrders();
+                        ArrayList<Order> orders = orderService.getAllOrdersWithProducts();
+                        for (Order order : orders) {
+                            System.out.println(order.displayOrderWithProducts());
+                        }
                         break;
                     case 2:
-                        displayOrderMenu();
+                        productController.productMenu();
                         break;
                     case 3:
                         orderService.getOrderWithCustomerInfo();
@@ -52,10 +57,15 @@ public class OrderController {
         }
     }
 
-    public void displayOrderMenu() throws SQLException {
+    public void newOrderMenu() throws SQLException {
+
         System.out.println("Ange dit ID: ");
         int customerId = scanner.nextInt();
 
         orderService.makeOrder(customerId);
+
+
     }
+
+
 }

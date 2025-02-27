@@ -1,25 +1,38 @@
 package Order;
+import Product.Product;
+
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Order {
     private int orderId;
-    private LocalDate orderDate;
+    private int customerId;
+    private LocalDateTime orderDate;
+    private List<Product> products;
+    private double totalPrice;
 
-    public Order(LocalDate orderDate) {
-        this.orderDate = orderDate;
+
+    // Konstrukör - för ny order
+    public Order(int customerId, List<String> products, double totalPrice) {
+        this.customerId = customerId;
+        this.products = new ArrayList<>();
+        this.totalPrice = totalPrice;
+        this.orderDate = LocalDateTime.now();
     }
 
-    public Order(int orderId, LocalDate orderDate) {
+    // För existerande
+    public Order(int orderId, LocalDateTime orderDate, int customerId) {
         this.orderId = orderId;
         this.orderDate = orderDate;
+        this.customerId = customerId;
+        this.products = new ArrayList<>();
     }
 
-    public LocalDate getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(LocalDate orderDate) {
-        this.orderDate = orderDate;
+    // I Order-klassen
+    public void addProduct(Product product) {
+        this.products.add(product);
     }
 
     public int getOrderId() {
@@ -30,11 +43,67 @@ public class Order {
         this.orderId = orderId;
     }
 
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    public LocalDateTime getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(LocalDateTime orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
                 "orderId=" + orderId +
+                ", customerId=" + customerId +
                 ", orderDate=" + orderDate +
+                ", products=" + products +
+                ", totalPrice=" + totalPrice +
                 '}';
     }
+
+    public String displayOrderWithProducts() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("\nOrder ID: ").append(orderId)
+                .append("\nOrderdatum: ").append(orderDate)
+                .append("\nKund ID: ").append(customerId)
+                .append("\nProdukter i ordern:");
+
+        for (Product product : products) {
+            sb.append("\n- ").append(product.getName())
+                    .append(", Antal: ").append(product.getStockQuantity())
+                    .append(", Pris: ").append(product.getPrice()).append(" kr");
+        }
+
+        sb.append("\n------------------------");
+
+        return sb.toString();
+    }
+
+
 }

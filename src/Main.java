@@ -1,7 +1,6 @@
-import Customer.CustomerController;
-import Order.OrderController;
-import Product.ProductController;
-import Product.ProductRepository;
+import Customer.*;
+import Product.*;
+import Order.*;
 
 import java.sql.*;
 
@@ -16,9 +15,10 @@ public class Main {
 
         //customerController.run();
 
-        //orderController.run();
+        orderController.run();
 
-        productController.run();
+
+        //productController.productMenu();
 
 
 
