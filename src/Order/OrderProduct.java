@@ -14,11 +14,8 @@ public class OrderProduct {
 
     public void newOrderproduct(Product product, int orderId) throws SQLException {
 
-        int productId = product.getProductId();
-
-        double price = product.getPrice();
-
-        orderRepository.addOrderProduct(orderId, productId, 1, price);
+        orderRepository.addOrderProduct(product, orderId);
+        System.out.println("Din order är nu lagd.");
 
     }
 }

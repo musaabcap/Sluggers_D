@@ -13,6 +13,7 @@ public class OrderController {
     public OrderController() throws SQLException {
         this.orderService = new OrderService();
         this.orderProduct = new OrderProduct();
+        orderProduct = new OrderProduct();
         this.scanner = new Scanner(System.in);
     }
 
@@ -36,9 +37,12 @@ public class OrderController {
                         }
                         break;
                     case 2:
-                        int newOrderId = orderService.makeOrder();
-                        Product shoppingCartProduct = orderService.addProductToShoppingCart();
-                        orderProduct.newOrderproduct(shoppingCartProduct, newOrderId);
+
+                        int newOrderId = orderService.makeOrder(); //Här kallar jag på makeOrder för att skapa ett nytt order id och sparar i en variable
+                        Product product = orderService.addProductToShoppingCart(); //Här sparar jag product objekt i variablen
+                        orderProduct.newOrderproduct(product, newOrderId); //Här skickar jag vidare variablerna
+                        //Product shoppingCartProduct = orderService.addProductToShoppingCart();
+                        //orderProduct.newOrderproduct(shoppingCartProduct, newOrderId);
                         break;
                     case 3:
                         orderService.getOrderWithCustomerInfo();

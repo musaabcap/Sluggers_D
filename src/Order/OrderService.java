@@ -17,6 +17,7 @@ public class OrderService {
     private ProductRepository productRepository;
     private Product product;
     private OrderProduct orderProduct;
+    private ShoppingCart shoppingCart;
 
 
     Scanner scanner = new Scanner(System.in);
@@ -27,6 +28,7 @@ public class OrderService {
         this.customerService = new CustomerService();
         this.productRepository = new ProductRepository();
         this.orderProduct = new OrderProduct();
+        this.shoppingCart = new ShoppingCart();
     }
 
     /*public void getAllOrders() throws SQLException {
@@ -53,13 +55,10 @@ public class OrderService {
     }
 
     public Product addProductToShoppingCart() throws SQLException {
-        System.out.println("Ange produkt Id för att lägga till varan i varukorgen:");
-        int input = scanner.nextInt();
-
-        Product product = productRepository.getProductById(input);
-
-        return product;
+        Product product = shoppingCart.addProduct(); //Jag har skapat en ny klass som endast ska ta hand om shoppingCart. Klassen heter ShoppingCart och metoden addProduct
+        return product; //Skickar tillbaka product objektet
     }
+
 
 
     public ArrayList<Order> getAllOrdersWithProducts() throws SQLException {

@@ -34,23 +34,24 @@ public class ProductRepository {
     }
 
     public Product getProductById(int id) throws SQLException {
+        String sql = "SELECT * FROM products WHERE product_id = ?";
         try (Connection conn = DriverManager.getConnection(URL);
-             PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM products WHERE product_id = ?")) {
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setInt(1, id);
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                return new Product(
-                        rs.getInt("product_id"),
-                        rs.getString("name"),
-                        rs.getString("description"),
-                        rs.getDouble("price"),
-                        rs.getInt("stock_quantity")
-                );
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return new Product(
+                            rs.getInt("product_id"),
+                            rs.getString("name"),
+                            rs.getString("description"),
+                            rs.getDouble("price"),
+                            rs.getInt("stock_quantity")
+                    );
+                }
             }
-            throw new SQLException("Product not found");
         }
+        throw new SQLException("Product not found");
     }
 
     public List<String> getProductsSortedByCategory() throws SQLException {

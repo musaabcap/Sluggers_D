@@ -8,8 +8,8 @@ public class Product {
     private String name;
     private String description;
     private double price;
+    private int quantity;
     private int stockQuantity;
-    private ArrayList<Product> products;
 
     public Product(int productId, String name, String description, double price, int stockQuantity) {
         this.productId = productId;
@@ -19,11 +19,11 @@ public class Product {
         this.stockQuantity = stockQuantity;
     }
 
-    public Product(int productId, String name, double price, int stockQuantity) {
+    public Product(int productId, String name, double price, int quantity) {
         this.productId = productId;
         this.name = name;
         this.price = price;
-        this.stockQuantity = stockQuantity;
+        this.quantity = quantity;
     }
 
     public int getProductId() {
@@ -66,12 +66,12 @@ public class Product {
         this.stockQuantity = stockQuantity;
     }
 
-    public void setProducts(ArrayList<Product> products) {
-        this.products = products;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public ArrayList<Product> getProducts() {
-        return products;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     @Override
