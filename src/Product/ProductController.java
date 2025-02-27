@@ -32,7 +32,7 @@ public class ProductController {
      * Huvudloop för produkthantering
      * Visar meny och hanterar användarval
      */
-    public void productMenu() {
+    public void productMenu(int orderId) {
         while (true) {
             try {
                 // Skriv ut menyalternativ direkt i run-metoden för tydlighet
@@ -56,7 +56,6 @@ public class ProductController {
                         sortProducts();
                         break;
                     case 3:
-                        orderController.newOrderMenu();
                         break;
                     case 0:
                         System.out.println("Avslutar produkthantering...");

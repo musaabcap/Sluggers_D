@@ -33,6 +33,26 @@ public class ProductRepository {
         return products;
     }
 
+    public Product getProductById(int id) throws SQLException {
+        try (Connection conn = DriverManager.getConnection(URL);
+             PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM products WHERE product_id = ?")) {
+
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return new Product(
+                        rs.getInt("product_id"),
+                        rs.getString("name"),
+                        rs.getString("description"),
+                        rs.getDouble("price"),
+                        rs.getInt("stock_quantity")
+                );
+            }
+            throw new SQLException("Product not found");
+        }
+    }
+
     public List<String> getProductsSortedByCategory() throws SQLException {
         List<String> sortedProducts = new ArrayList<>();
         String sql = "        SELECT c.name AS category_name, p.name AS product_name, p.price, p.stock_quantity" +

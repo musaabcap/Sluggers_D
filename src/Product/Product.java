@@ -1,5 +1,7 @@
 package Product;
 
+import java.util.ArrayList;
+
 public class Product {
 
     private int productId;
@@ -7,6 +9,7 @@ public class Product {
     private String description;
     private double price;
     private int stockQuantity;
+    private ArrayList<Product> products;
 
     public Product(int productId, String name, String description, double price, int stockQuantity) {
         this.productId = productId;
@@ -61,6 +64,14 @@ public class Product {
 
     public void setStockQuantity(int stockQuantity) {
         this.stockQuantity = stockQuantity;
+    }
+
+    public void setProducts(ArrayList<Product> products) {
+        this.products = products;
+    }
+
+    public ArrayList<Product> getProducts() {
+        return products;
     }
 
     @Override

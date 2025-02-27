@@ -8,9 +8,11 @@ public class OrderController {
     OrderService orderService;
     Scanner scanner;
     ProductController productController;
+    OrderProduct orderProduct;
 
     public OrderController() throws SQLException {
         this.orderService = new OrderService();
+        this.orderProduct = new OrderProduct();
         this.scanner = new Scanner(System.in);
     }
 
@@ -34,7 +36,9 @@ public class OrderController {
                         }
                         break;
                     case 2:
-                        productController.productMenu();
+                        int newOrderId = orderService.makeOrder();
+                        Product shoppingCartProduct = orderService.addProductToShoppingCart();
+                        orderProduct.newOrderproduct(shoppingCartProduct, newOrderId);
                         break;
                     case 3:
                         orderService.getOrderWithCustomerInfo();
@@ -57,15 +61,6 @@ public class OrderController {
         }
     }
 
-    public void newOrderMenu() throws SQLException {
-
-        System.out.println("Ange dit ID: ");
-        int customerId = scanner.nextInt();
-
-        orderService.makeOrder(customerId);
-
-
-    }
 
 
 }
