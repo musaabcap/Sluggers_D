@@ -45,20 +45,34 @@ public class OrderService {
         }
     }*/
 
+    /**
+     * Skapar en ny beställning i systemet
+     */
     public int makeOrder() throws SQLException {
         System.out.println("Ange dit ID: ");
         int customerId = scanner.nextInt();
 
         LocalDateTime dateNow = LocalDateTime.now();
+
+        // Skapar en ny beställning i databasen med datum/tid och kund-ID
+        // och får tillbaka det nya beställningsnumret
         int newOrderId = orderRepository.addOrder(dateNow, customerId);
         return newOrderId;
     }
 
-    public Product addProductToShoppingCart() throws SQLException {
-        Product product = shoppingCart.addProduct(); //Jag har skapat en ny klass som endast ska ta hand om shoppingCart. Klassen heter ShoppingCart och metoden addProduct
-        return product; //Skickar tillbaka product objektet
-    }
 
+    /**
+     * Lägger till en produkt i kundvagnen
+     */
+    public Product addProductToShoppingCart() throws SQLException {
+        // Anropar metoden addProduct() från ShoppingCart-klassen för att välja en produkt
+        // och lägga till den i kundvagnen
+        Product product = shoppingCart.addProduct();
+        //Jag har skapat en ny klass som endast ska ta hand om shoppingCart. Klassen heter ShoppingCart och metoden addProduct
+        // Returnerar den valda produkten så att den kan användas senare
+        // (t.ex. för att koppla ihop med en beställning)
+        return product;
+    }
 
 
     public ArrayList<Order> getAllOrdersWithProducts() throws SQLException {

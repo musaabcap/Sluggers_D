@@ -56,7 +56,7 @@ public class ProductRepository {
 
     public List<String> getProductsSortedByCategory() throws SQLException {
         List<String> sortedProducts = new ArrayList<>();
-        String sql = "        SELECT c.name AS category_name, p.name AS product_name, p.price, p.stock_quantity" +
+        String sql = "SELECT c.name AS category_name, p.name AS product_name, p.price, p.stock_quantity" +
                 "        FROM products p" +
                 "        JOIN products_categories pc ON p.product_id = pc.product_id" +
                 "        JOIN categories c ON pc.category_id = c.category_id" +

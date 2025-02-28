@@ -9,11 +9,13 @@ public class OrderController {
     Scanner scanner;
     ProductController productController;
     OrderProduct orderProduct;
+    ProductService productService;
 
     public OrderController() throws SQLException {
         this.orderService = new OrderService();
         this.orderProduct = new OrderProduct();
-        orderProduct = new OrderProduct();
+        this.orderProduct = new OrderProduct();
+        this.productService = new ProductService();
         this.scanner = new Scanner(System.in);
     }
 
@@ -37,10 +39,27 @@ public class OrderController {
                         }
                         break;
                     case 2:
+                        // Skapar en ny beställning i systemet och får tillbaka ett unikt beställningsnummer
+                        int newOrderId = orderService.makeOrder();
 
-                        int newOrderId = orderService.makeOrder(); //Här kallar jag på makeOrder för att skapa ett nytt order id och sparar i en variable
-                        Product product = orderService.addProductToShoppingCart(); //Här sparar jag product objekt i variablen
-                        orderProduct.newOrderproduct(product, newOrderId); //Här skickar jag vidare variablerna
+                        boolean continueShopping = true;
+
+                        while(continueShopping){
+                            productService.showAllProducts();
+                            // Lägger till en produkt i kundvagnen och sparar produktinformationen i produkt-objekt
+                            Product product = orderService.addProductToShoppingCart();
+                            if(product == null){
+                                // Det sista steget: Kopplar ihop produkten med beställningen i databasen
+                                // så att systemet vet vilka produkter som ingår i vilken beställning
+                                orderProduct.newOrderproduct(product, newOrderId);
+                            }
+                            System.out.println("Vill du lägga till fler produkter? (j/n)");
+                            String answer = scanner.next();
+                            if (!answer.equalsIgnoreCase("j")) {
+                                continueShopping = false;
+                            }
+
+                        }
                         //Product shoppingCartProduct = orderService.addProductToShoppingCart();
                         //orderProduct.newOrderproduct(shoppingCartProduct, newOrderId);
                         break;

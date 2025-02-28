@@ -96,8 +96,9 @@ public class Order {
 
         for (Product product : products) {
             sb.append("\n- ").append(product.getName())
-                    .append(", Antal: ").append(product.getStockQuantity())
-                    .append(", Pris: ").append(product.getPrice()).append(" kr");
+                    .append(", Antal: ").append(product.getQuantity())
+                    .append(", Pris: ").append(product.getPrice()).append(" kr")
+                    .append(", Totalt: ").append(product.getPrice() * product.getQuantity()).append(" kr");
         }
 
         sb.append("\n------------------------");

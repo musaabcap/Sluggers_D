@@ -1,6 +1,5 @@
 package Order;
 import Product.Product;
-
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -35,6 +34,27 @@ public class OrderRepository {
             return generatedOrderId; // Returnerar det nya order_id
         }
 
+    }
+
+    public void addOrderProduct(Product product, int orderId) throws SQLException {
+        // Se till att product inte är null innan du försöker lägga till den
+        if (product == null) {
+            throw new IllegalArgumentException("Product is null, cannot add to order.");
+        }
+
+        try (Connection conn = DriverManager.getConnection(URL);
+             PreparedStatement pstmt = conn.prepareStatement(
+                     "INSERT INTO orders_products (order_id, product_id, quantity, unit_price) VALUES (?, ?, ?, ?)"
+             )) {
+
+            // Antag att orderId är ett fält i OrderRepository, annars skicka med det som parameter
+            pstmt.setInt(1, orderId);
+            pstmt.setInt(2, product.getProductId());
+            pstmt.setInt(3, product.getQuantity());
+            pstmt.setDouble(4, product.getPrice());
+
+            pstmt.executeUpdate();
+        }
     }
 
     public ArrayList<OrderWithCustomer> getOrdersWithCustomerInfo() throws SQLException {
@@ -106,7 +126,6 @@ public class OrderRepository {
                     int quantity = rs.getInt("quantity");
 
                     // Skapa Product-objekt och lägg till i ordern
-
                     Product product = new Product(productId, name, price, quantity);
 
                     order.addProduct(product);
@@ -116,25 +135,6 @@ public class OrderRepository {
     }
 
 
-    public void addOrderProduct(Product product, int orderId) throws SQLException {
-        // Se till att product inte är null innan du försöker lägga till den
-        if (product == null) {
-            throw new IllegalArgumentException("Product is null, cannot add to order.");
-        }
 
-        try (Connection conn = DriverManager.getConnection(URL);
-             PreparedStatement pstmt = conn.prepareStatement(
-                     "INSERT INTO orders_products (order_id, product_id, quantity, unit_price) VALUES (?, ?, ?, ?)"
-             )) {
-
-            // Antag att orderId är ett fält i OrderRepository, annars skicka med det som parameter
-            pstmt.setInt(1, orderId);
-            pstmt.setInt(2, product.getProductId());
-            pstmt.setInt(3, product.getQuantity());
-            pstmt.setDouble(4, product.getPrice());
-
-            pstmt.executeUpdate();
-        }
-    }
 
 }

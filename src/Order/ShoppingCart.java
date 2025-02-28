@@ -16,18 +16,26 @@ public class ShoppingCart {
         productRepository = new ProductRepository();
     }
 
+
+    /**
+     * Låter användaren välja en produkt och ange antal att lägga i kundvagnen
+     */
     public Product addProduct() throws SQLException {
         System.out.println("Ange produkt Id för att lägga till varan i varukorgen:");
         int input = scanner.nextInt();
-        Product product = productRepository.getProductById(input); //Hämtar produkt id från repository klassen där input besätmmer vilken produkt.
+
+        // Hämtar produktinformation från databasen baserat på det angivna ID:t
+        Product product = productRepository.getProductById(input);
 
         System.out.println("Hur många av produkten vill du lägga till?");
         int input2 = scanner.nextInt();
 
-        if(product.getStockQuantity() >= input2) { //Här har jag en if sats för att se till så att mängden som användaren vill beställa finns i databasen.
-            product.setQuantity(input2); //Sätter en temporär quantity för att spara i shoppingCart
-            shoppingCart.add(product); //Här lägger jag till den nya produkten i listan
-            System.out.println("Antal " + product.getQuantity() + " St, har laggts till." + //Här skriver jag ut så att det blir rätt
+        if(product.getStockQuantity() >= input2) { // Kontrollerar om det finns tillräckligt många produkter i lager
+            product.setQuantity(input2); // // Sparar det önskade antalet i produktobjektet
+            shoppingCart.add(product); // Lägger till produkten i kundvagnen (shoppingCart-listan)
+
+            // Visar en bekräftelse till användaren med antal och produktnamn
+            System.out.println("Antal " + product.getQuantity() + " St, har laggts till." +
                     " Av produkten " + product.getName());
             return product;
         }
