@@ -48,7 +48,7 @@ public class OrderController {
                             productService.showAllProducts();
                             // Lägger till en produkt i kundvagnen och sparar produktinformationen i produkt-objekt
                             Product product = orderService.addProductToShoppingCart();
-                            if(product == null){
+                            if(product != null){
                                 // Det sista steget: Kopplar ihop produkten med beställningen i databasen
                                 // så att systemet vet vilka produkter som ingår i vilken beställning
                                 orderProduct.newOrderproduct(product, newOrderId);
@@ -60,8 +60,6 @@ public class OrderController {
                             }
 
                         }
-                        //Product shoppingCartProduct = orderService.addProductToShoppingCart();
-                        //orderProduct.newOrderproduct(shoppingCartProduct, newOrderId);
                         break;
                     case 3:
                         orderService.getOrderWithCustomerInfo();
