@@ -34,16 +34,16 @@ public class ProductService {
      * @throws SQLException vid problem med databasanrop
      */
     public void showAllProducts() throws SQLException {
-        // Hämta alla kunder från repository-lagret
+        // Hämta alla produkter från repository-lagret
         ArrayList<Product> serviceProducts = productRepository.getAllProducts();
 
-        // Kontrollera om vi har några kunder att visa
+        // Kontrollera om vi har några produkter att visa
         if (serviceProducts.isEmpty()) {
             System.out.println("Inga kunder hittades.");
             return;
         }
 
-        // Skriv ut alla kunder med tydlig formatering
+        // Skriv ut alla produkter med tydlig formatering
         System.out.println("\n=== Kundlista ===");
         for (Product product : serviceProducts) {
             System.out.println("ID: " + product.getProductId());
@@ -85,6 +85,22 @@ public class ProductService {
     public void sortProductsByCategory() throws SQLException {
         List<String> sortedProducts = productRepository.getProductsSortedByCategory();
         sortedProducts.forEach(System.out::println);
+    }
+
+    public Product getProductByName(String productName) throws SQLException {
+        if(productName == null) {
+            System.out.println("Ingen produkt hittades.");
+            return null;
+        }
+        return productRepository.findByName(productName);
+    }
+
+    public Product getProductById(int productId) throws SQLException {
+        if(productId < 0) {
+            System.out.println("Produkt id måste vara ett positivt nummer");
+            return null;
+        }
+        return productRepository.getProductById(productId);
     }
 
 

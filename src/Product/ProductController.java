@@ -32,14 +32,15 @@ public class ProductController {
      * Huvudloop för produkthantering
      * Visar meny och hanterar användarval
      */
-    public void productMenu(int orderId) {
+    public void productMenu() {
         while (true) {
             try {
                 // Skriv ut menyalternativ direkt i run-metoden för tydlighet
                 System.out.println("\n=== Produkt hantering ===");
                 System.out.println("1. Visa alla produkter");
                 System.out.println("2. Sortera produkter");
-                System.out.println("3. Lägg till vara i varukorgen");
+                System.out.println("3. Sök på produktnamn");
+                System.out.println("4. Sök på produkt-id");
                 System.out.println("0. Avsluta");
                 System.out.print("Välj ett alternativ: ");
 
@@ -56,6 +57,26 @@ public class ProductController {
                         sortProducts();
                         break;
                     case 3:
+                        System.out.println("Ange produktnamn:");
+                        scanner.nextLine(); // Rensa bufferten om det behövs
+                        String productName = scanner.nextLine();
+                        Product productByName = productService.getProductByName(productName); // Spara returvärdet i en variabel
+
+                        if (productByName != null) {
+                            System.out.println(productByName.toString()); // Anropa toString() på produkt-objektet
+                        } else {
+                            System.out.println("Produkten hittades inte");
+                        }
+                        break;
+                    case 4:
+                        System.out.println("Ange produkt-id: ");
+                        int productId = scanner.nextInt();
+                        Product productById = productService.getProductById(productId);
+                        if (productById != null) {
+                            System.out.println(productById.toString());
+                        }else{
+                            System.out.println("Produkten hittades inte");
+                        }
                         break;
                     case 0:
                         System.out.println("Avslutar produkthantering...");

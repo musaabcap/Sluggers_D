@@ -33,6 +33,28 @@ public class ProductRepository {
         return products;
     }
 
+    public Product findByName(String productName) throws SQLException {
+        try (Connection conn = DriverManager.getConnection(URL);
+             PreparedStatement pstmt = conn.prepareStatement(
+                     "SELECT * FROM products WHERE LOWER(name) LIKE LOWER(?)")) {
+
+            pstmt.setString(1, "%" + productName + "%");
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return new Product(
+                        rs.getInt("product_id"),
+                        rs.getString("name"),
+                        rs.getString("description"),
+                        rs.getDouble("price"),
+                        rs.getInt("stock_quantity")
+                );
+            } else {
+                return null;
+            }
+        }
+    }
+
     public Product getProductById(int id) throws SQLException {
         String sql = "SELECT * FROM products WHERE product_id = ?";
         try (Connection conn = DriverManager.getConnection(URL);

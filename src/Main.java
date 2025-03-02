@@ -15,8 +15,7 @@ public class Main {
 
         //customerController.run();
 
-        orderController.run();
-
+        productController.productMenu();
         //productController.productMenu();
 
 
