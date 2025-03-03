@@ -13,16 +13,7 @@ public class Order {
     private List<Product> products;
     private double totalPrice;
 
-
-    // Konstrukör - för ny order
-    public Order(int customerId, List<String> products, double totalPrice) {
-        this.customerId = customerId;
-        this.products = new ArrayList<>();
-        this.totalPrice = totalPrice;
-        this.orderDate = LocalDateTime.now();
-    }
-
-    // För existerande
+    // Konstruktur för existerande ordrar
     public Order(int orderId, LocalDateTime orderDate, int customerId) {
         this.orderId = orderId;
         this.orderDate = orderDate;

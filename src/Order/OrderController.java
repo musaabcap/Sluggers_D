@@ -58,7 +58,6 @@ public class OrderController {
                             if (!answer.equalsIgnoreCase("j")) {
                                 continueShopping = false;
                             }
-
                         }
                         break;
                     case 3:

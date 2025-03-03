@@ -9,8 +9,6 @@ public class OrderRepository {
 
     private static final String URL = "jdbc:sqlite:webbutiken.db";
 
-
-
     public int addOrder(LocalDateTime dateNow, int customerId) throws SQLException {
         int generatedOrderId = -1; // Defaultvärde om något går fel
         try (Connection conn = DriverManager.getConnection(URL)) {
@@ -54,6 +52,7 @@ public class OrderRepository {
             pstmt.setDouble(4, product.getPrice());
 
             pstmt.executeUpdate();
+
         }
     }
 

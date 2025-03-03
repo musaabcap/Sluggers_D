@@ -99,4 +99,23 @@ public class ProductRepository {
         return sortedProducts;
     }
 
+    public Product updateProductStockQuantity(int productId, int quantityToReduce) throws SQLException {
+        try (Connection conn = DriverManager.getConnection(URL);
+             PreparedStatement pstmt = conn.prepareStatement(
+                     "UPDATE products SET stock_quantity = stock_quantity - ? WHERE product_id = ?",
+                     Statement.RETURN_GENERATED_KEYS)) {
+
+            pstmt.setInt(1, quantityToReduce);
+            pstmt.setInt(2, productId);
+
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new SQLException("Failed to update product stock, product ID not found: " + productId);
+            }
+
+            // Hämta den uppdaterade produkten
+            return getProductById(productId);
+        }
+    }
+
 }

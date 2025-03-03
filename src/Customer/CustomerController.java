@@ -60,16 +60,17 @@ public class CustomerController {
                         System.out.println(customer.toString());
                         break;
                     case 3:
+                        scanner.nextLine();
                         System.out.println("Ange namn: ");
-                        String namn = scanner.next();
+                        String namn = scanner.nextLine();
                         System.out.println("Ange email: ");
-                        String email = scanner.next();
+                        String email = scanner.nextLine();
                         System.out.println("Ange telefon: ");
-                        String telefon = scanner.next();
+                        String telefon = scanner.nextLine();
                         System.out.println("Ange adress: ");
-                        String adress = scanner.next();
+                        String adress = scanner.nextLine();
                         System.out.println("Ange lösenord: ");
-                        String losenord = scanner.next();
+                        String losenord = scanner.nextLine();
                         customerService.addCustomer(namn, email, telefon, adress, losenord);
                         break;
                     case 4:

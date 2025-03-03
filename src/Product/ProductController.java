@@ -41,6 +41,7 @@ public class ProductController {
                 System.out.println("2. Sortera produkter");
                 System.out.println("3. Sök på produktnamn");
                 System.out.println("4. Sök på produkt-id");
+                System.out.println("5. Uppdatera produkt-saldo");
                 System.out.println("0. Avsluta");
                 System.out.print("Välj ett alternativ: ");
 
@@ -76,6 +77,18 @@ public class ProductController {
                             System.out.println(productById.toString());
                         }else{
                             System.out.println("Produkten hittades inte");
+                        }
+                        break;
+                    case 5:
+                            System.out.println("Ange produkt-id: ");
+                            int productid = scanner.nextInt();
+                            System.out.println("Ange nytt produkt-saldo: ");
+                            int saldo = scanner.nextInt();
+                        try {
+                            Product product = productService.updateProductStock(productid, saldo);
+                            System.out.println("Lagersaldo uppdaterat för produkt: " + product.getName());
+                        } catch (SQLException e) {
+                            System.out.println("Fel vid uppdatering av lagersaldo: " + e.getMessage());
                         }
                         break;
                     case 0:

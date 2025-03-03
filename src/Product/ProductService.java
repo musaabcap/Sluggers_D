@@ -103,6 +103,10 @@ public class ProductService {
         return productRepository.getProductById(productId);
     }
 
+    public Product updateProductStock(int productId, int quantityToReduce) throws SQLException {
+        return productRepository.updateProductStockQuantity(productId, quantityToReduce);
+    }
+
 
 
     /**
