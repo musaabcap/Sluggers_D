@@ -80,7 +80,7 @@ public class ProductController {
                         }
                         break;
                     case 5:
-                            System.out.println("Ange produkt-id: ");
+                            System.out.println("Ange produkt-id: ");//Gör om till att uppdatera pris och sen ska du fixa validering för 2 stycken områden.
                             int productid = scanner.nextInt();
                             System.out.println("Ange nytt produkt-saldo: ");
                             int saldo = scanner.nextInt();
