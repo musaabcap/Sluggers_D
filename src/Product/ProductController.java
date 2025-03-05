@@ -41,7 +41,7 @@ public class ProductController {
                 System.out.println("2. Sortera produkter");
                 System.out.println("3. Sök på produktnamn");
                 System.out.println("4. Sök på produkt-id");
-                System.out.println("5. Uppdatera produkt-saldo");
+                System.out.println("5. Uppdatera produkt");
                 System.out.println("0. Avsluta");
                 System.out.print("Välj ett alternativ: ");
 
@@ -79,7 +79,7 @@ public class ProductController {
                             System.out.println("Produkten hittades inte");
                         }
                         break;
-                    case 5:
+                    case 5:/*
                             System.out.println("Ange produkt-id: ");//Gör om till att uppdatera pris och sen ska du fixa validering för 2 stycken områden.
                             int productid = scanner.nextInt();
                             System.out.println("Ange nytt produkt-saldo: ");
@@ -89,7 +89,7 @@ public class ProductController {
                             System.out.println("Lagersaldo uppdaterat för produkt: " + product.getName());
                         } catch (SQLException e) {
                             System.out.println("Fel vid uppdatering av lagersaldo: " + e.getMessage());
-                        }
+                        }*/
                         break;
                     case 0:
                         System.out.println("Avslutar produkthantering...");
