@@ -65,7 +65,7 @@ public class OrderService {
      * Lägger till en produkt i kundvagnen
      */
     public Product addProductToShoppingCart() throws SQLException {
-        // Anropar metoden addProduct() från ShoppingCart-klassen för att välja en produkt
+                // Anropar metoden addProduct() från ShoppingCart-klassen för att välja en produkt
         // och lägga till den i kundvagnen
         Product product = shoppingCart.addProduct();
         //Jag har skapat en ny klass som endast ska ta hand om shoppingCart. Klassen heter ShoppingCart och metoden addProduct

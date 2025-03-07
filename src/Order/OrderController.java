@@ -59,6 +59,8 @@ public class OrderController {
                                 continueShopping = false;
                             }
                         }
+                        // Lägger till bekräftelsemeddelandet här, efter att while-loopen är klar
+                        System.out.println("Din order är nu lagd.");
                         break;
                     case 3:
                         orderService.getOrderWithCustomerInfo();
