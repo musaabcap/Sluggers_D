@@ -63,7 +63,7 @@ public class ProductRepository {
             pstmt.setInt(1, id);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    return new Product(
+                    return new Product( // Sparar värdena i ett produkt-objekt & retunerar.
                             rs.getInt("product_id"),
                             rs.getString("name"),
                             rs.getString("description"),

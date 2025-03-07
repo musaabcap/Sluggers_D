@@ -107,6 +107,20 @@ public class ProductService {
         return productRepository.updateProductStockQuantity(productId, quantityToReduce);
     }
 
+    public void updateProductPrice(int productId, double newPrice) throws SQLException {
+        // Validering av produktID och pris
+        if (productId <= 0) {
+            throw new IllegalArgumentException("Produkt-ID måste vara större än 0");
+        }
+
+        if (newPrice < 0) {
+            throw new IllegalArgumentException("Priset kan inte vara negativt");
+        }
+
+        // Utför uppdateringen om valideringen passerar
+        productRepository.updateProductPrice(productId, newPrice);
+    }
+
 
 
     /**
