@@ -1,6 +1,4 @@
 package Product;
-import Customer.Customer;
-import Customer.CustomerRepository;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

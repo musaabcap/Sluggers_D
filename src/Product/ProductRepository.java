@@ -118,4 +118,21 @@ public class ProductRepository {
         }
     }
 
+    public void updateProductPrice(int productId, double newPrice) throws SQLException {
+        String sql = "UPDATE products SET price = ? WHERE product_id = ?";
+
+        try (Connection connection = DriverManager.getConnection(URL);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setDouble(1, newPrice);
+            statement.setInt(2, productId);
+
+            int rowsAffected = statement.executeUpdate();
+
+            if (rowsAffected == 0) {
+                throw new SQLException("Ingen produkt hittades med ID: " + productId);
+            }
+        }
+    }
+
 }

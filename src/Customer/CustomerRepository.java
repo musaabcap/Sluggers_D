@@ -89,7 +89,7 @@ public class CustomerRepository {
 
     }
 
-    public void updateCustomerName(int customerId, String name) throws SQLException {
+    public Customer updateCustomerName(int customerId, String name) throws SQLException {
         String sql = "UPDATE customers SET name = ? WHERE customer_id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL);
@@ -100,8 +100,9 @@ public class CustomerRepository {
             if (affected != 1) {
                 throw new SQLException("Lyckades inte uppdatera kunden");
             }
-            System.out.println("Konto med id: " + customerId + " har uppdaterats");
         }
+        // Använder getCustomerById som finns här i repositoryn
+        return getCustomerById(customerId);
     }
 
     public void updateCustomerEmail(int customerId, String email) throws SQLException {

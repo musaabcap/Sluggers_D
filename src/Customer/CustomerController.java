@@ -1,6 +1,7 @@
 package Customer;
 import org.w3c.dom.ls.LSOutput;
 import java.sql.SQLException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -98,39 +99,46 @@ public class CustomerController {
         }
     }
 
-    public void displayUpdateMenu() throws SQLException {
-        System.out.println("Ange kundens ID som ska uppdateras: ");
-        int customerId = scanner.nextInt();
-        scanner.nextLine();
+    public void displayUpdateMenu() {
+        try {
+            System.out.println("\nVad vill du uppdatera?");
+            System.out.println("1. Namn");
+            System.out.println("2. Email");
+            System.out.println("3. Telefon");
+            System.out.println("4. Adress");
+            System.out.println("5. Lösenord");
+            System.out.println("0. Avsluta");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
 
-        System.out.println("\nVad vill du uppdatera?");
-        System.out.println("1. Namn"); // Metoden finns för att ändra namn
-        System.out.println("2. Email"); // Metoden finns för att ändra email
-        System.out.println("3. Telefon");
-        System.out.println("4. Adress");
-        System.out.println("5. Lösenord");
-        System.out.println("0. Avsluta");
+            switch (choice) {
+                case 1:
+                    System.out.println("Ange kundens ID: ");
+                    int customerId = scanner.nextInt();
+                    scanner.nextLine();
 
-        int choice = scanner.nextInt();
-        scanner.nextLine();
-        switch (choice) {
-            case 1:
-                System.out.println("Ange nytt namn: ");
-                String newName = scanner.nextLine();
-                customerService.updateCustomerName(customerId, newName);
-                break;
-            case 2:
-                System.out.println("Ange ny email: ");
-                String newEmail = scanner.nextLine();
-                customerService.updateCustomerEmail(customerId, newEmail);
-                break;
-            case 0:
-                System.out.println("Avslutar kundhantering...");
-                return;
-            default:
-                System.out.println("Ogiltigt val, försök igen");
+                    System.out.println("Ange nytt namn: ");
+                    String newName = scanner.nextLine();
+
+                    Customer updatedCustomer = customerService.updateCustomerName(customerId, newName);
+                    System.out.println("Kundens nya namn: " + updatedCustomer.getName());
+                    break;
+                case 0:
+                    return;
+                default:
+                    System.out.println("Ogiltigt val, försök igen.");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Felaktig inmatning. Ange ett nummer.");
+            scanner.nextLine(); // Rensa scanner-bufferten
+        } catch (IllegalArgumentException e) {
+            // Detta fångar validerings-fel från service-lagret
+            System.out.println("Fel: " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Databasfel: " + e.getMessage());
+        } catch (RuntimeException e) {
+            // Detta fångar de omvandlade databasfel från service-lagret
+            System.out.println("Ett fel uppstod: " + e.getMessage());
         }
-
-
     }
 }

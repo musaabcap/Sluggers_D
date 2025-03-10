@@ -11,7 +11,6 @@ public class CustomerService {
 
     // Repository som hanterar alla databasanrop
     CustomerRepository customerRepository;
-
     /**
      * Konstruktor för Customer.CustomerService
      * Initierar repository-lagret
@@ -19,7 +18,6 @@ public class CustomerService {
     public CustomerService() {
         this.customerRepository = new CustomerRepository();
     }
-
     /**
      * Hämtar och visar alla kunder från databasen
      * Service-lagret kan här:
@@ -38,7 +36,6 @@ public class CustomerService {
             System.out.println("Inga kunder hittades.");
             return;
         }
-
         // Skriv ut alla kunder med tydlig formatering
         System.out.println("\n=== Kundlista ===");
         for (Customer customer : customers) {
@@ -53,7 +50,6 @@ public class CustomerService {
     }
 
     public Customer getCustomerById(int customerId) throws SQLException {
-
         Customer customer = customerRepository.getCustomerById(customerId);
         if(customer == null){
             System.out.println("Ingen kund hittades med ID: " + customerId);
@@ -62,14 +58,12 @@ public class CustomerService {
         return customer;
     }
     public void addCustomer(String namn, String email, String telefon, String adress, String losenord) throws SQLException {
-
         if (namn == null || namn.trim().isEmpty()) {
             throw new IllegalArgumentException("Namn får inte vara tomt");
         }
         if (email == null || !email.contains("@")) {
             throw new IllegalArgumentException("Ogiltig emailadress");
         }
-
         try {
             customerRepository.addCustomer(namn, email, telefon, adress, losenord);
         } catch (SQLException e) {
@@ -77,21 +71,22 @@ public class CustomerService {
         }
     }
 
-    public void updateCustomerName(int customerId, String newName) throws SQLException {
+    public Customer updateCustomerName(int customerId, String newName) throws SQLException {
+        // Validerar affärsregler samt fångar omvandlar fel från databas till användarvänlig info
         if (customerId <= 0) {
-            throw new IllegalArgumentException("Kunde ID inte vara tomt");
+            throw new IllegalArgumentException("Kund-ID måste vara positivt tal");
         }
         if (newName == null || newName.trim().isEmpty()) {
             throw new IllegalArgumentException("namn kan inte vara tomt");
         }
-
         try {
-            customerRepository.updateCustomerName(customerId, newName);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
 
+            return customerRepository.updateCustomerName(customerId, newName);
+        } catch (Exception e) {
+            throw new RuntimeException("Kunde inte uppdatera kundens namn",e);
+        }
     }
+
     public void updateCustomerEmail(int customerId, String newEmail) throws SQLException {
         if (newEmail == null || newEmail.trim().isEmpty()) {
             throw new IllegalArgumentException("email kan inte vara tomt");
@@ -99,29 +94,24 @@ public class CustomerService {
         if (customerId <= 0) {
             throw new IllegalArgumentException("ID kan inte vara mindre än 1");
         }
-
         try {
             customerRepository.updateCustomerEmail(customerId, newEmail);
         }
         catch (Exception e) {
             throw new RuntimeException("Kunde inte uppdatera kundens email",e);
         }
-
     }
 
     public void deleteCustomerById(int customerId) throws SQLException {
         if (customerId <= 0) {
             throw new IllegalArgumentException("ID kan inte vara mindre än 1");
         }
-
         try {
             customerRepository.deleteCustomer(customerId);
         }
         catch (Exception e) {
             throw new RuntimeException("Kunde inte radera kund",e);
         }
-
-
     }
 
     /**
