@@ -4,6 +4,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class OrderRepository {
 
@@ -127,13 +128,93 @@ public class OrderRepository {
                     // Skapa Product-objekt och lägg till i ordern
                     Product product = new Product(productId, name, price, quantity);
 
+                    //Produkterna läggs till direkt i Order-objektet via anropet
                     order.addProduct(product);
                 }
             }
         }
     }
 
+    /**
+     * Hämtar alla ordrar med tillhörande produkter för en specifik kund.
+     * @param customerId ID för kunden vars ordrar ska hämtas
+     * @return En lista med Order-objekt som innehåller information om ordrarna och deras produkter
+     * @throws SQLException om ett databasfel inträffar
+     * @throws IllegalArgumentException om customerId är mindre än 1
+     */
 
+    public ArrayList<Order> getOrdersWithProductsByCustomer(int customerId) throws SQLException {
+        // Validering av indata - kontrollera att customerId är giltig
+        if (customerId < 1) {
+            throw new IllegalArgumentException("Kund-ID måste vara ett positivt heltal.");
+        }
 
+        // HashMap för att lagra Order-objekt med order_id som nyckel
+        // Detta gör att vi kan hitta en specifik order snabbt genom dess ID
+        HashMap<Integer, Order> orderMap = new HashMap<>();
 
+        try (Connection conn = DriverManager.getConnection(URL);
+             PreparedStatement pstmt = conn.prepareStatement(
+                     // SQL-fråga med JOIN för att hämta all data på en gång
+                     "SELECT o.order_id, o.order_date, o.customer_id, " +
+                             "p.product_id, p.name, p.price, op.quantity " +
+                             "FROM orders o " +
+                             // LEFT JOIN säkerställer att ordrar utan produkter också hämtas
+                             "LEFT JOIN orders_products op ON o.order_id = op.order_id " +
+                             "LEFT JOIN products p ON op.product_id = p.product_id " +
+                             // WHERE-villkor för att endast hämta ordrar för den specifika kunden
+                             "WHERE o.customer_id = ? " +
+                             // Sortera efter order_id för att underlätta bearbetning
+                             "ORDER BY o.order_id")) {
+
+            pstmt.setInt(1, customerId);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    int orderId = rs.getInt("order_id");
+
+                    // Om vi inte redan har skapat ett Order-objekt för denna order_id
+                    if (!orderMap.containsKey(orderId)){
+                        // Hämta orderinformation
+                        LocalDateTime orderDateTime = rs.getTimestamp("order_date").toLocalDateTime();
+                        int orderCustomerId = rs.getInt("customer_id");
+
+                        // Skapa ett nytt Order-objekt
+                        Order order = new Order(orderId, orderDateTime, orderCustomerId);
+
+                        // Lägg till Order-objektet i HashMap med order_id som nyckel
+                        orderMap.put(orderId, order);
+                    }
+                    //Hämta det befintliga Order-objektet från HashMap
+                    //Genom att hämta Order-objektet från HashMap ser du till att du alltid
+                    //jobbar med samma Order-objekt för en specifik order, oavsett hur många produkter den har.
+                    Order order = orderMap.get(orderId);
+
+                    // Kontrollera om det finns någon produkt för denna order
+                    // (om produkt-kolumnerna är NULL från LEFT JOIN)
+
+                    int productId = rs.getInt("product_id");
+
+                    if(!rs.wasNull()){
+                        // Om produkten inte är NULL
+                        // Hämta produktinformation
+                        String name = rs.getString("name");
+                        double price = rs.getDouble("price");
+                        int quantity = rs.getInt("quantity");
+
+                        // Skapa ett Product-objekt och lägg till i ordern
+                        Product product = new Product(productId, name, price, quantity);
+                        // Här använder jag referensen från orderMap.get(orderId)
+                        order.addProduct(product);
+                    }
+
+                }
+            }
+        }
+        if (orderMap.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return new ArrayList<>(orderMap.values());
+    }
 }
+

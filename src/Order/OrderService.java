@@ -76,10 +76,11 @@ public class OrderService {
 
 
     public ArrayList<Order> getAllOrdersWithProducts() throws SQLException {
-        // Först hämta alla ordrar
+        // Hämta alla grundläggande orderinformation, dessa innehåller inga produkter ännu
         ArrayList<Order> orders = orderRepository.getExistingOrders();
 
-        // Sedan lägg till produkter för varje order
+        // Denna metod går till databasen och hämtar alla produkter som tillhör just den specifika ordern (baserat på order_id)
+        // Vi behöver ändra Order-objektet genom att lägga till produkter i dess products-lista.
         for (Order order : orders) {
             orderRepository.addProductsToOrder(order);
         }
@@ -97,5 +98,23 @@ public class OrderService {
             System.out.println(orderWithCustomer.toString());
         }
 
+    }
+
+    public ArrayList<Order> getOrdersWithCustomerInfo(int customerId) throws SQLException {
+        // Validera customerId
+        if (customerId < 1) {
+            throw new IllegalArgumentException("Kund-ID måste vara ett positivt heltal.");
+        }
+
+        // Hämta ordrar
+        ArrayList<Order> orders = orderRepository.getOrdersWithProductsByCustomer(customerId);
+
+        // Här kan man lägga till loggning eller affärslogik för tomma resultat om du vill
+        if (orders.isEmpty()) {
+            // Loggning, t.ex.: logger.info("Inga ordrar hittades för kund med ID: " + customerId);
+
+        }
+
+        return orders;
     }
 }

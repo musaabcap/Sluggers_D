@@ -23,9 +23,10 @@ public class OrderController {
         while(true){
             try{
                 System.out.println("\n=== Orderhantering ===");
-                System.out.println("1. Get all orders with product information");
+                System.out.println("1. Get all orders with customer & product information");
                 System.out.println("2. Make a new order");
                 System.out.println("3. Show order with customer information");
+                System.out.println("4. Get order with customer & product information");
                 System.out.println("0. Avsluta");
                 System.out.print("Välj ett alternativ: ");
 
@@ -33,7 +34,16 @@ public class OrderController {
 
                 switch(select){
                     case 1:
+                        /*flödet är:
+                        Hämta alla ordrar med grundinformation
+                        För varje order, använd dess ID för att hämta alla tillhörande produkter
+                        Lägg till dessa produkter i respektive Order-objekt
+                        Nu har du kompletta Order-objekt med all tillhörande information
+                        Visa informationen*/
+
+                        // Anropar order-service för att hämta ordrar med dess produkter
                         ArrayList<Order> orders = orderService.getAllOrdersWithProducts();
+                        // Loopar genom alla ordrar och visar informationen
                         for (Order order : orders) {
                             System.out.println(order.displayOrderWithProducts());
                         }
@@ -64,6 +74,14 @@ public class OrderController {
                         break;
                     case 3:
                         orderService.getOrderWithCustomerInfo();
+                        break;
+                    case 4:
+                        System.out.println("Ange kund-id");
+                        int customerId = scanner.nextInt();
+                        ArrayList<Order> Orders = orderService.getOrdersWithCustomerInfo(customerId);
+                        for (Order order: Orders){
+                            System.out.println(order.displayOrderWithProducts());
+                        }
                         break;
                     case 0:
                         System.out.println("0. Avslutar orderhantering");
