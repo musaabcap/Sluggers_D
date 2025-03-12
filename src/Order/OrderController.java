@@ -92,6 +92,14 @@ public class OrderController {
             } catch(SQLException e){
                 System.out.println("Ett fel uppstod vid databasanrop: "+e.getMessage());
             }
+            //När användaren anger ett ogiltigt kund-ID (t.ex. -1 eller 0)
+            //Service-metoden kastar IllegalArgumentException
+            //Denna exception "bubblar upp" till controller-klassen
+            //Din nya catch-block fångar den och visar ett tydligt felmeddelande
+            catch(IllegalArgumentException e) {
+                System.out.println("Valideringsfel: " + e.getMessage());
+                scanner.nextLine(); // Rensa scanner-bufferten
+            }
             catch (Exception e) {
                 // Hantera övriga fel (t.ex. felaktig input)
                 System.out.println("Ett oväntat fel uppstod: " + e.getMessage());

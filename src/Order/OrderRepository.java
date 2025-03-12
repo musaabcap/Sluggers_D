@@ -144,11 +144,6 @@ public class OrderRepository {
      */
 
     public ArrayList<Order> getOrdersWithProductsByCustomer(int customerId) throws SQLException {
-        // Validering av indata - kontrollera att customerId är giltig
-        if (customerId < 1) {
-            throw new IllegalArgumentException("Kund-ID måste vara ett positivt heltal.");
-        }
-
         // HashMap för att lagra Order-objekt med order_id som nyckel
         // Detta gör att vi kan hitta en specifik order snabbt genom dess ID
         HashMap<Integer, Order> orderMap = new HashMap<>();

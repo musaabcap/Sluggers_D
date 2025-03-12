@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.*;
 
 public class OrderService {
 
@@ -18,6 +19,8 @@ public class OrderService {
     private Product product;
     private OrderProduct orderProduct;
     private ShoppingCart shoppingCart;
+    //Döper min logger till klassnamnet.
+    private static Logger logger = Logger.getLogger(OrderService.class.getName());
 
 
     Scanner scanner = new Scanner(System.in);
@@ -29,6 +32,14 @@ public class OrderService {
         this.productRepository = new ProductRepository();
         this.orderProduct = new OrderProduct();
         this.shoppingCart = new ShoppingCart();
+    }
+
+    public static Logger getLogger() {
+        return logger;
+    }
+
+    public static void setLogger(Logger logger) {
+        OrderService.logger = logger;
     }
 
     /*public void getAllOrders() throws SQLException {
@@ -102,19 +113,32 @@ public class OrderService {
 
     public ArrayList<Order> getOrdersWithCustomerInfo(int customerId) throws SQLException {
         // Validera customerId
+        logger.log(Level.INFO, "Försöker hitta ordrar för kund-id: " + customerId);
+
         if (customerId < 1) {
+            logger.warning("Ogiltigt kund-ID angivet: " + customerId);
             throw new IllegalArgumentException("Kund-ID måste vara ett positivt heltal.");
         }
 
-        // Hämta ordrar
-        ArrayList<Order> orders = orderRepository.getOrdersWithProductsByCustomer(customerId);
+        try {
+            // Logga innan databasanrop
+            logger.info("Utför databasanrop för att hämta ordrar för kund: " + customerId);
 
-        // Här kan man lägga till loggning eller affärslogik för tomma resultat om du vill
-        if (orders.isEmpty()) {
-            // Loggning, t.ex.: logger.info("Inga ordrar hittades för kund med ID: " + customerId);
+            // Hämta ordrar
+            ArrayList<Order> orders = orderRepository.getOrdersWithProductsByCustomer(customerId);
 
+            // Logga resultatet från databasanropet
+            if (orders.isEmpty()) {
+                logger.info("Inga ordrar hittades för kund med id: " + customerId);
+            } else {
+                logger.info("Hittade " + orders.size() + " ordrar för kund med id: " + customerId);
+            }
+            return orders;
+        } catch (SQLException e) {
+            // Logga SQL-fel
+            logger.severe("Databasfel vid hämtning av ordrar för kund " + customerId + ": " + e.getMessage());
+            // Omvandla till RuntimeException med tydligt meddelande och behåll originalfelet
+            throw new RuntimeException("Kunde inte hämta kundens orderhistorik", e);
         }
-
-        return orders;
     }
 }
