@@ -85,15 +85,16 @@ public class Order {
                 .append("\nKund ID: ").append(customerId)
                 .append("\nProdukter i ordern:");
 
+        double totalPrice = 0.0;
         for (Product product : products) {
+            double productTotal = product.getPrice() * product.getQuantity(); // Beräkna produkt-delsumman
+            totalPrice += productTotal; // Uppdatera totalPrice med produktens delsumma
             sb.append("\n- ").append(product.getName())
                     .append(", Antal: ").append(product.getQuantity())
                     .append(", Pris: ").append(product.getPrice()).append(" kr")
                     .append(", Totalt: ").append(product.getPrice() * product.getQuantity()).append(" kr");
         }
-
-        sb.append("\n------------------------");
-
+        sb.append("\n- Total pris för hela ordern: ").append(totalPrice).append(" kr");
         return sb.toString();
     }
 
