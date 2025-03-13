@@ -13,7 +13,7 @@ public class Main {
 
         ProductController productController = new ProductController();
 
-        //customerController.run();
+        customerController.run();
 
         //orderController.run();
 

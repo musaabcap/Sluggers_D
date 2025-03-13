@@ -60,15 +60,33 @@ public class OrderService {
      * Skapar en ny beställning i systemet
      */
     public int makeOrder() throws SQLException {
-        System.out.println("Ange dit ID: ");
-        int customerId = scanner.nextInt();
+        int customerId;
+        while (true) {
+            try {
+                System.out.print("Ange ditt ID: ");
+                customerId = scanner.nextInt();
+
+                if (customerId <= 0) {
+                    System.out.println("Fel: ID måste vara ett positivt nummer. Försök igen.");
+                } else {
+                    break; // Giltig input, bryt loopen
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println("Fel: Ange ett giltigt heltal.");
+                scanner.next(); // Rensar ogiltig input
+            }
+        }
 
         LocalDateTime dateNow = LocalDateTime.now();
 
-        // Skapar en ny beställning i databasen med datum/tid och kund-ID
-        // och får tillbaka det nya beställningsnumret
-        int newOrderId = orderRepository.addOrder(dateNow, customerId);
-        return newOrderId;
+        try {
+            // Skapar en ny beställning i databasen
+            int newOrderId = orderRepository.addOrder(dateNow, customerId);
+            return newOrderId;
+        } catch (SQLException e) {
+            System.out.println("Databasfel vid skapande av order: " + e.getMessage());
+            return -1; // Indikerar att något gick fel
+        }
     }
 
 
@@ -78,7 +96,7 @@ public class OrderService {
     public Product addProductToShoppingCart() throws SQLException {
                 // Anropar metoden addProduct() från ShoppingCart-klassen för att välja en produkt
         // och lägga till den i kundvagnen
-        Product product = shoppingCart.addProduct();
+        shoppingCart.addProduct();
         //Jag har skapat en ny klass som endast ska ta hand om shoppingCart. Klassen heter ShoppingCart och metoden addProduct
         // Returnerar den valda produkten så att den kan användas senare
         // (t.ex. för att koppla ihop med en beställning)

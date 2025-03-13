@@ -38,7 +38,7 @@ public class OrderRepository {
     public void addOrderProduct(Product product, int orderId) throws SQLException {
         // Se till att product inte är null innan du försöker lägga till den
         if (product == null) {
-            throw new IllegalArgumentException("Product is null, cannot add to order.");
+            throw new IllegalArgumentException("PFel: Produkten är null och kan inte läggas till i ordern.");
         }
 
         try (Connection conn = DriverManager.getConnection(URL);
@@ -54,6 +54,8 @@ public class OrderRepository {
 
             pstmt.executeUpdate();
 
+        } catch (SQLException e) {
+            System.out.println("Databasfel vid tillägg av produkt till order: " + e.getMessage());
         }
     }
 

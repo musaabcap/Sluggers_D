@@ -84,12 +84,8 @@ public class ProductController {
                         int productIdPrice = scanner.nextInt();
                         System.out.println("Ange nytt pris: ");
                         double newPrice = scanner.nextDouble();
-                        try {
-                            productService.updateProductPrice(productIdPrice, newPrice);
-                            System.out.println("Priset uppdaterat för produkt med ID: " + productIdPrice);
-                        } catch (SQLException e) {
-                            System.out.println("Fel vid uppdatering av pris: " + e.getMessage());
-                        }
+                        productService.updateProductPrice(productIdPrice, newPrice);
+                        System.out.println("Priset uppdaterat för produkt med ID: " + productIdPrice);
                         break;
                     case 0:
                         System.out.println("Avslutar produkthantering...");
@@ -147,12 +143,6 @@ public class ProductController {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-        }
-    }
-
-    public void advancedSortProductsMenu() {
-        while (true) {
-            System.out.println("\n=== Avancerad sortering ===");
         }
     }
 }
